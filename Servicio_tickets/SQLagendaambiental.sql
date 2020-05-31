@@ -84,7 +84,7 @@ idTicket int FOREIGN KEY REFERENCES Ticket(idTicket),
 idSolicitante int not null,
 Descripcion varchar(500) not null,
 --Estatus int,
-HrsActivo timestamp,
+HrsActivo DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 CONSTRAINT idEncargadoCom FOREIGN KEY (idSolicitante) REFERENCES  Encargado(RPE),
 CONSTRAINT idUsuario_ExternoCom FOREIGN KEY (idSolicitante) REFERENCES  usuario_externo(idUsuario_Externo)
 );
@@ -124,6 +124,7 @@ INSERT INTO Sub_Unidad(idUnidad,RPE,nombre) values (1,2,'Asistente de Dirección
 INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (5,'Servicio de Difusión y Comunicación',300),(5,'Servicio de Generación de Contenidos',300),
 (5,'Servicio de Fotografía',300),(5,'Servicio Audiovisual',300);
 
+--insert into Comentario (idTicket,idSolicitante,Descripcion) values (1,2,'Ok se enviará la camara a usted Juan en alrededor de una semana')
 
 select * from usuario_externo
 select * from Nivel_Academico
@@ -131,4 +132,5 @@ select * from Trabajo
 select * from Encargado
 select * from Unidad
 select * from Sub_Unidad
-select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0;
+select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0 and t.idSolicitante=1;
+select c.* from Comentario c where c.idTicket=1;
