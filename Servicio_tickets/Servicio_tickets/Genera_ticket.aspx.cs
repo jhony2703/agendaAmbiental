@@ -22,50 +22,53 @@ namespace Servicio_tickets
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(GetConnectionString());
-            string sql = "select * from usuario_externo where curp=@val1";
-            try
+            if (Session["curp"] != null)
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Val1", Session["curp"].ToString());
-                cmd.CommandType = CommandType.Text;
-                //cmd.ExecuteNonQuery();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows) //Si tiene datos
+                SqlConnection conn = new SqlConnection(GetConnectionString());
+                string sql = "select * from usuario_externo where curp=@val1";
+                try
                 {
-                    while (reader.Read())//Se leen
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@Val1", Session["curp"].ToString());
+                    cmd.CommandType = CommandType.Text;
+                    //cmd.ExecuteNonQuery();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows) //Si tiene datos
                     {
-                        Session["id"] = reader.GetInt32(0);
-                        Session["nombre"] = nombC.Text = reader.GetString(3);
-                        usu.Text = reader.GetString(4);
-                        Session["correo"] =  correo.Text = reader.GetString(5);
-                        Session["cel"] = tel.Text = reader.GetString(6);
-                        //Se guardan los datos en la sesion
-                        //Session["nombre"] = nombC.Text;
-                        //Session["correo"] = correo.Text;
-                        //Session["cel"] = tel.Text;
+                        while (reader.Read())//Se leen
+                        {
+                            Session["id"] = reader.GetInt32(0);
+                            Session["nombre"] = nombC.Text = reader.GetString(3);
+                            usu.Text = reader.GetString(4);
+                            Session["correo"] = correo.Text = reader.GetString(5);
+                            Session["cel"] = tel.Text = reader.GetString(6);
+                        }
                     }
-                }
-                else
-                {
-                    Response.Write("<script>alert('Ocurrio un error');</script>");
-                    Response.Redirect("Index.apsx");
-                }
-                reader.Close();
+                    else
+                    {
+                        Response.Write("<script>alert('Ocurrio un error');</script>");
+                        Response.Redirect("Index.aspx");
+                    }
+                    reader.Close();
 
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            else
             {
-                string msg = "Insert Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
+                Response.Redirect("Index.aspx");
             }
-            finally
-            {
-                conn.Close();
-            }
-        }
+}
 
         public void insertaTicket()
         {
@@ -83,7 +86,7 @@ namespace Servicio_tickets
                 cmd.Parameters.AddWithValue("@Val6", asunto.Value);
                 cmd.CommandType = CommandType.Text;
                 int a = cmd.ExecuteNonQuery();
-                if (a > 0) { Response.Redirect("Misticket.aspx"); }
+                if (a > 0) { insertaComentario(); }
                 
             }
             catch (System.Data.SqlClient.SqlException ex)
@@ -96,6 +99,75 @@ namespace Servicio_tickets
             {
                 conn.Close();
             }
+        }
+
+        private void insertaComentario()
+        {
+            int idTick = dameIdultimo();
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            string sql = "insert into Comentario (idTicket,idSolicitante,Descripcion) values (@Val1,@Val2,@Val3)";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Val1", idTick);
+                cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["id"].ToString()));
+                cmd.Parameters.AddWithValue("@Val3", detalle.Value);
+                cmd.CommandType = CommandType.Text;
+                int a = cmd.ExecuteNonQuery();
+                if (a > 0) { Response.Redirect("Misticket.aspx"); }
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private int dameIdultimo()
+        {
+            int val = 0;
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            string sql = "select * from Ticket where idSolicitante=@Val1 and Asunto=@Val2";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Val1", Int32.Parse(Session["id"].ToString()));
+                cmd.Parameters.AddWithValue("@Val2", asunto.Value);
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows) //Si tiene datos
+                {
+                    while (reader.Read())//Se leen
+                    {
+                       val = reader.GetInt32(0);
+                    }
+                }
+                else
+                {
+                    val = 0;
+                }
+                reader.Close();
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return val;
         }
 
         /// <summary>

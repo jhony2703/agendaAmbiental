@@ -14,13 +14,20 @@ namespace Servicio_tickets
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            llenaActivos();
+            if (Session["curp"] != null)
+            {
+                llenaActivos();
+            }
+            else
+            {
+                Response.Redirect("Index.aspx");
+            }
         }
 
         private void llenaActivos()
         {
             SqlConnection conn = new SqlConnection(GetConnectionString());
-            string sql = "select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0";
+            string sql = "select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0 and t.idSolicitante="+Session["id"].ToString();
             try
             {
                 conn.Open();
@@ -44,7 +51,7 @@ namespace Servicio_tickets
                         link = new HyperLink
                         {
                             Text = asunto,
-                            NavigateUrl = "#",
+                            NavigateUrl = "Ticket.aspx?id="+idticket.ToString(),
                             ID = idticket.ToString()
                         };
                         link.Style.Add("margin-left", "15px");

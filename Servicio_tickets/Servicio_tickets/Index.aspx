@@ -16,7 +16,7 @@
     <link href="~/Content/UASLP.css" rel="stylesheet" />
 </head>
 <body>  --%> 
-
+    
     <div class="container">
         <div class="Encabezado">
             <div class="escudos">

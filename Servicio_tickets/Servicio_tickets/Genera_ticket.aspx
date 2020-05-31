@@ -113,7 +113,7 @@
             </tr>
             <tr>
                 <td style="width:30%; text-align:right;"><label>Detalle Solicitud:</label></td>
-                <td style="width:90%"><textarea maxlength="500" class="form-control"></textarea></td>
+                <td style="width:90%"><textarea maxlength="500" id="detalle" runat="server" class="form-control"></textarea></td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:right">
