@@ -7,13 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Servicio_tickets
-{
-
-
-    public partial class Index
-    {
-
+namespace Servicio_tickets {
+    
+    
+    public partial class Index {
+        
         /// <summary>
         /// Control UASLPLogo.
         /// </summary>
@@ -22,7 +20,7 @@ namespace Servicio_tickets
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage UASLPLogo;
-
+        
         /// <summary>
         /// Control LemaAz.
         /// </summary>
@@ -31,7 +29,7 @@ namespace Servicio_tickets
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage LemaAz;
-
+        
         /// <summary>
         /// Control usuario.
         /// </summary>
@@ -40,7 +38,16 @@ namespace Servicio_tickets
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox usuario;
-
+        
+        /// <summary>
+        /// Control RequiredFieldValidator1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
         /// <summary>
         /// Control contra.
         /// </summary>
@@ -49,7 +56,16 @@ namespace Servicio_tickets
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox contra;
-
+        
+        /// <summary>
+        /// Control RequiredFieldValidator2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        
         /// <summary>
         /// Control btnIS.
         /// </summary>

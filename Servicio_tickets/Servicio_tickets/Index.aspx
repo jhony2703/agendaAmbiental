@@ -55,11 +55,13 @@
                             <div class="form-group">
                                 <label for="input-usuario">CURP:</label>
                                 <asp:TextBox ID="usuario" runat="server" placeholder="CURP" CssClass="form-control"></asp:TextBox>
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="usuario" ForeColor="Red"></asp:RequiredFieldValidator>
                                 <%--<input type="text" class="form-control" id="input-usuario"/>--%>
                             </div>
                             <div class="form-group">
                                 <label for="input-password">Contraseña:</label>
                                 <asp:TextBox ID="contra" TextMode="Password" runat="server" placeholder="Contraseña" CssClass="form-control"></asp:TextBox>
+								<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="contra" ForeColor="Red"></asp:RequiredFieldValidator>
                                <%-- <input type="password" class="form-control" id="input-password" />--%>
                             </div>
                             <asp:Button ID="btnIS" runat="server" CssClass="btn btn-primary" Text="Iniciar sesión" OnClick="btnIS_Click"/>
