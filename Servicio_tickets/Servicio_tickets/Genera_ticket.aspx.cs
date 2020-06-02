@@ -82,7 +82,7 @@ namespace Servicio_tickets
                 cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["id"].ToString()));
                 cmd.Parameters.AddWithValue("@Val3", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@Val4", DBNull.Value);
-                cmd.Parameters.AddWithValue("@Val5", 0);
+                cmd.Parameters.AddWithValue("@Val5", 1);
                 cmd.Parameters.AddWithValue("@Val6", asunto.Value);
                 cmd.CommandType = CommandType.Text;
                 int a = cmd.ExecuteNonQuery();

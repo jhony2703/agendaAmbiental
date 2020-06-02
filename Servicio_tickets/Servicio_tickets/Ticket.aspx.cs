@@ -16,9 +16,10 @@ namespace Servicio_tickets
         {
             if (Session["curp"] != null)
             {
-                if (Request.QueryString["id"] != null)
-                    //Response.Write("From Page1 param1 value=" + Request.QueryString["id"]);
+                if (Request.QueryString["id"] != null && Request.QueryString["estatus"] != null)
+                {
                     llenaConversacion(Request.QueryString["id"]);
+                }
                 else
                     Response.Redirect("Misticket.aspx");
             }
@@ -45,7 +46,7 @@ namespace Servicio_tickets
                 {
                     while (reader.Read())//Se leen
                     {
-                        Session["ticketid"] = reader.GetInt32(0);
+                        Session["ticketid"] = reader.GetInt32(1);
                         idmsj = reader.GetInt32(2);
                         msj = reader.GetString(3);
                         if(idmsj.ToString() != Session["id"].ToString())
@@ -57,6 +58,20 @@ namespace Servicio_tickets
                             creaMsjResp(msj);
                         }
                     }
+                }
+                if(Request.QueryString["estatus"].ToString() == "2")
+                {
+                    divcerrar.Visible = false;
+                    divabr.Visible = true;
+                    Respuesta.Disabled = true;
+                    responde.Enabled = false;
+                }
+                else
+                {
+                    divcerrar.Visible = true;
+                    divabr.Visible = false;
+                    Respuesta.Disabled = false;
+                    responde.Enabled = true;
                 }
                 reader.Close();
 
@@ -120,6 +135,92 @@ namespace Servicio_tickets
         {
             return System.Configuration.ConfigurationManager.ConnectionStrings["connDB"].ConnectionString;
             //the "ConnStringName" is the name of your Connection String that was set up from the Web.Config
+        }
+
+        protected void cerrar_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = "UPDATE Ticket SET Estatus=2, Fecha_fin=@Val1 where idTicket=@Val2";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Val1", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["ticketid"].ToString()));
+                cmd.CommandType = CommandType.Text;
+                int a = cmd.ExecuteNonQuery();
+                Response.Redirect("Misticket.aspx");
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        protected void responde_Click(object sender, EventArgs e)
+        {
+            insertComentario();
+            actualizaEstatus();
+        }
+
+        private void actualizaEstatus()
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            string sql = "UPDATE Ticket SET Estatus=1 where idTicket=@Val1";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Val1", Int32.Parse(Session["ticketid"].ToString()));
+                cmd.CommandType = CommandType.Text;
+                int a = cmd.ExecuteNonQuery();
+                if (a > 0) { Response.Redirect("Ticket.aspx?id=" + Session["ticketid"].ToString() + "&estatus=1"); }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void insertComentario()
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            string sql = "insert into Comentario (idTicket,idSolicitante,Descripcion) values (@Val1,@Val2,@Val3)";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Val1", Int32.Parse(Session["ticketid"].ToString()));
+                cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["id"].ToString()));
+                cmd.Parameters.AddWithValue("@Val3", Respuesta.Value);
+                cmd.CommandType = CommandType.Text;
+                int a = cmd.ExecuteNonQuery();
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

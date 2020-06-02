@@ -134,3 +134,5 @@ select * from Unidad
 select * from Sub_Unidad
 select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0 and t.idSolicitante=1;
 select c.* from Comentario c where c.idTicket=1;
+
+--UPDATE Ticket SET Estatus=1, Fecha_fin=NULL where idTicket=2

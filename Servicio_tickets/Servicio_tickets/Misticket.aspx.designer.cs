@@ -23,5 +23,7 @@ namespace Servicio_tickets
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage UASLPLogo;
         protected global::System.Web.UI.WebControls.Panel divact;
+        protected global::System.Web.UI.WebControls.Panel divesp;
+        protected global::System.Web.UI.WebControls.Panel divcerr;
     }
 }

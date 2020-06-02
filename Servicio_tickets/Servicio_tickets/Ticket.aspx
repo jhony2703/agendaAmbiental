@@ -112,60 +112,26 @@
         
         <%--Aqui empueza el contenido--%>
         <h2>Historial del ticket</h2>
-        <div style="background: beige;">
+        <div style="background: lightcyan;">
             <asp:Panel ID="historial" runat="server" CssClass="historial">
-                <%--<div class="chatCont">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" style="width:100%;" />
-                  <p style="text-align:justify">Hello. How are you today?</p>
-                </div>
-
-                <div class="chatCont darker">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" class="right" style="width:100%;" />
-                  <p style="text-align:justify">Hey! I'm fine. Thanks for asking!</p>
-                </div>
-
-                <div class="chatCont">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" style="width:100%;"/>
-                  <p style="text-align:justify">Sweet! So, what do you wanna do today?</p>
-                </div>
-
-                <div class="chatCont darker">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" class="right" style="width:100%;" />
-                  <p style="text-align:justify">
-                      Tenemos un problema con tal madre para tal cosa este es un texto de ejemplo generado solo como prueba para ver que tal esta este estilo de chat y como se ve cuando es un texto mas grande
-                  </p>
-                  <%--<span class="time-left">11:05</span>--%>
-                <%--</div>
-                                <div class="chatCont">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" style="width:100%;" />
-                  <p style="text-align:justify">Hello. How are you today?</p>
-                </div>
-
-                <div class="chatCont darker">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" class="right" style="width:100%;" />
-                  <p style="text-align:justify">Hey! I'm fine. Thanks for asking!</p>
-                </div>
-
-                <div class="chatCont">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" style="width:100%;"/>
-                  <p style="text-align:justify">Sweet! So, what do you wanna do today?</p>
-                </div>
-
-                <div class="chatCont darker">
-                  <img src="Imagenes/icono_us.png" alt="Avatar" class="right" style="width:100%;" />
-                  <p style="text-align:justify">
-                      Tenemos un problema con tal madre para tal cosa este es un texto de ejemplo generado solo como prueba para ver que tal esta este estilo de chat y como se ve cuando es un texto mas grande
-                  </p>--%>
-                  <%--<span class="time-left">11:05</span>--%>
-                <%--</div>--%>
              </asp:Panel>
             <div style="margin:40px 0;">
-                <textarea maxlength="500" class="form-control darker" style="width:50%; height: 100px; text-align: justify;font-size: 16px;"></textarea>
+                <textarea runat="server"  id="Respuesta" maxlength="500" class="form-control darker" style="width:50%; height: 100px; text-align: justify;font-size: 16px;"></textarea>
                 <div style="margin-left:auto; margin-top:10px; width:fit-content;">
-                    <asp:Button ID="responde" runat="server" CssClass="btn btn-primary" Text="Responder"/>
+                    <asp:Button ID="responde" runat="server" CssClass="btn btn-primary" Text="Responder" OnClick="responde_Click"/>
                 </div>
-            </div>
+            </div>            
         </div>
+        <asp:Panel ID="divcerrar" runat="server" style="margin-bottom:50px;">      
+                <div style="margin-left:auto; margin-right:auto; margin-top:10px; width:fit-content;">
+                    <asp:Button ID="cerrar" runat="server" CssClass="btn btn-danger" Text="Cerrar Ticket" OnClick="cerrar_Click"/>
+                </div>
+          </asp:Panel>
+        <asp:Panel ID="divabr" runat="server" style="margin-bottom:50px;">      
+                <div style="margin-left:auto; margin-right:auto; margin-top:10px; width:fit-content;">
+                    <asp:Button ID="abrir" runat="server" CssClass="btn btn-primary" Text="Abrir ticket" OnClick="cerrar_Click"/>
+                </div>
+          </asp:Panel>
         <div id="info">
         </div>
         <div class="piedepagina">
