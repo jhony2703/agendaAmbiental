@@ -111,7 +111,24 @@
         </div>
         
         <%--Aqui empueza el contenido--%>
-        <h2>Historial del ticket</h2>
+        <div style="background-color: #1B3257; color:white; text-align:center;">
+            <h2>Historial del ticket</h2>
+            <asp:Panel ID="divinfo" runat="server" CssClass="container" style="background-color: #1B3257;color: white;font-size: 15px;">
+             </asp:Panel>
+             <%--<div class="container" >
+                <div class="row">
+                        <div class="col-sm">
+                            <p>Area: Comunicación</p>
+                        </div>
+                        <div class="col-sm">
+                            <p>Servicio: Un servicio</p>
+                        </div>
+                        <div class="col-sm">
+                            <p>Encargado: MALDONADO DIAZ FABIAN GIOVANY</p>
+                        </div>
+                </div>
+              </div>--%>
+         </div>
         <div style="background: lightcyan;">
             <asp:Panel ID="historial" runat="server" CssClass="historial">
              </asp:Panel>
@@ -129,7 +146,7 @@
           </asp:Panel>
         <asp:Panel ID="divabr" runat="server" style="margin-bottom:50px;">      
                 <div style="margin-left:auto; margin-right:auto; margin-top:10px; width:fit-content;">
-                    <asp:Button ID="abrir" runat="server" CssClass="btn btn-primary" Text="Abrir ticket" OnClick="cerrar_Click"/>
+                    <asp:Button ID="abrir" runat="server" CssClass="btn btn-primary" Text="Abrir ticket" OnClick="open_tick"/>
                 </div>
           </asp:Panel>
         <div id="info">

@@ -121,11 +121,23 @@ INSERT INTO Unidad(RPE,nombre) values (1,'Director Agenda Ambienta'),(3,'Educaci
 INSERT INTO Sub_Unidad(idUnidad,RPE,nombre) values (1,2,'Asistente de Dirección'),(5,8,'Asistente administración'),
 (5,9,'Apoyo administrativo'),(9,14,'Asistente'),(10,14,'Asistente'),(9,15,'Seguimiento de alumnos CONACyT');
 
-INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (5,'Servicio de Difusión y Comunicación',300),(5,'Servicio de Generación de Contenidos',300),
-(5,'Servicio de Fotografía',300),(5,'Servicio Audiovisual',300);
+INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (3,'Servicio de Asesoría',300),(3,'Servicio de Acopio',300),
+(3,'Servicio de programa de reuso',300),(3,'Servicio Formativo Sostenible',300);
 
---insert into Comentario (idTicket,idSolicitante,Descripcion) values (1,2,'Ok se enviará la camara a usted Juan en alrededor de una semana')
+INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (4,'Servicio de Difusión y Comunicación',300),(4,'Servicio de Generación de Contenidos',300),
+(4,'Servicio de Fotografía',300),(4,'Servicio Audiovisual',300);
 
+INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (5,'Servicios de Contabilidad (Reembolsos y gastos por comprobar)',300),
+(2,'Servicio de Educación Continua',300),(6,'Solicitud de Diseño (medios gráficos digitales e impresos)',300)
+
+INSERT INTO Servicio(idUnidad,nombre,Hrs_Atencion) values (7,'Acutalización/Modificación contenido sitio WEB',300),
+(7,'Soporte Técnico a usuarios',300),(7,'Instalación de Infraestructura de TIC',300),
+(7,'Gestión de Video Conferencia',300),(7,'Préstamo de Infraestructura de TIC',300),(7,'Solicitud de Servicios por Producto',300)
+--insert into Comentario (idTicket,idSolicitante,Descripcion) values (1,2,'Ok se apoyara en la generecion de contenido, quiere contenido en todos lados o en alguna red social en especifico')
+----UPDATE Ticket SET Estatus=0 where idTicket=1
+
+--insert into Comentario (idTicket,idSolicitante,Descripcion) values (1,2,'Listo se ha generado el contenido')
+----UPDATE Ticket SET Estatus=0 where idTicket=1
 select * from usuario_externo
 select * from Nivel_Academico
 select * from Trabajo
@@ -135,4 +147,10 @@ select * from Sub_Unidad
 select t.* from Ticket t inner join usuario_externo u on t.idSolicitante = u.idUsuario_Externo where t.Estatus=0 and t.idSolicitante=1;
 select c.* from Comentario c where c.idTicket=1;
 
---UPDATE Ticket SET Estatus=1, Fecha_fin=NULL where idTicket=2
+select s.nombre as Servicio, u.nombre as Unidad, e.nombre_completo as Encargado from Servicio s inner join Ticket t on t.idServicio = s.idServicio inner join Unidad u on u.idUnidad=s.idUnidad inner join Encargado e on e.RPE = u.RPE where t.idTicket=1
+select * from Servicio s inner join Ticket t on t.idServicio = s.idServicio inner join Unidad u on u.idUnidad=s.idUnidad inner join Encargado e on e.RPE = u.RPE where t.idTicket=1
+select * from Servicio s inner join Unidad u on u.idUnidad=s.idUnidad
+
+--UPDATE Ticket SET Estatus=1, Fecha_fin=NULL,Asunto='Un asunto' where idTicket=3
+--UPDATE Comentario SET Descripcion='Este es un ejemplo' where idTicket=3
+--DELETE FROM Ticket where idTicket=3

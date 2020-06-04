@@ -19,6 +19,7 @@ namespace Servicio_tickets
                 if (Request.QueryString["id"] != null && Request.QueryString["estatus"] != null)
                 {
                     llenaConversacion(Request.QueryString["id"]);
+                    llenaInfo(Request.QueryString["id"]);
                 }
                 else
                     Response.Redirect("Misticket.aspx");
@@ -72,6 +73,69 @@ namespace Servicio_tickets
                     divabr.Visible = false;
                     Respuesta.Disabled = false;
                     responde.Enabled = true;
+                }
+                reader.Close();
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void llenaInfo(string id)
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString());
+            string sql = "select s.nombre as Servicio, u.nombre as Unidad, e.nombre_completo as Encargado from Servicio s inner join Ticket t on t.idServicio = s.idServicio inner join Unidad u on u.idUnidad=s.idUnidad inner join Encargado e on e.RPE = u.RPE where t.idTicket=" + id + ";";
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                //cmd.ExecuteNonQuery();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows) //Si tiene datos
+                {
+                    while (reader.Read())//Se leen
+                    {
+                        HtmlGenericControl divrow = new HtmlGenericControl();
+                        HtmlGenericControl divcol = new HtmlGenericControl();
+                        HtmlGenericControl p = new HtmlGenericControl();
+                        divrow.Attributes["class"] = "row";
+                        divrow.TagName = "div";
+                        divinfo.Controls.Add(divrow);
+                        divcol.Attributes["class"] = "col-sm";
+                        divcol.TagName = "div";
+                        divrow.Controls.Add(divcol);
+                        p.InnerText = "Area:"+ reader.GetString(1);
+                        p.TagName = "p";
+                        divcol.Controls.Add(p);
+
+                        HtmlGenericControl divcol2 = new HtmlGenericControl();
+                        HtmlGenericControl p2 = new HtmlGenericControl();
+                        divcol2.Attributes["class"] = "col-sm";
+                        divcol2.TagName = "div";
+                        divrow.Controls.Add(divcol2);
+                        p2.InnerText = "Servicio:" + reader.GetString(0);
+                        p2.TagName = "p";
+                        divcol2.Controls.Add(p2);
+
+                        HtmlGenericControl divcol3 = new HtmlGenericControl();
+                        HtmlGenericControl p3 = new HtmlGenericControl();
+                        divcol3.Attributes["class"] = "col-sm";
+                        divcol3.TagName = "div";
+                        divrow.Controls.Add(divcol3);
+                        p3.InnerText = "Encargado:" + reader.GetString(2);
+                        p3.TagName = "p";
+                        divcol3.Controls.Add(p3);
+
+                    }
                 }
                 reader.Close();
 
@@ -221,6 +285,14 @@ namespace Servicio_tickets
             {
                 conn.Close();
             }
+        }
+
+        protected void open_tick(object sender, EventArgs e)
+        {
+            divcerrar.Visible = true;
+            divabr.Visible = false;
+            Respuesta.Disabled = false;
+            responde.Enabled = true;
         }
     }
 }
