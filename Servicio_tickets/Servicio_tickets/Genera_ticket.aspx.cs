@@ -89,7 +89,7 @@ namespace Servicio_tickets
                 cmd.Parameters.AddWithValue("@Val3", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@Val4", DBNull.Value);
                 cmd.Parameters.AddWithValue("@Val5", 1);
-                cmd.Parameters.AddWithValue("@Val6", asunto.Value);
+                cmd.Parameters.AddWithValue("@Val6", textboxasunto.Text);
                 cmd.CommandType = CommandType.Text;
                 int a = cmd.ExecuteNonQuery();
                 if (a > 0) { insertaComentario(); }
@@ -118,7 +118,7 @@ namespace Servicio_tickets
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Val1", idTick);
                 cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["id"].ToString()));
-                cmd.Parameters.AddWithValue("@Val3", detalle.Value);
+                cmd.Parameters.AddWithValue("@Val3", textarea.Text);
                 cmd.CommandType = CommandType.Text;
                 int a = cmd.ExecuteNonQuery();
                 if (a > 0) { Response.Redirect("Misticket.aspx"); }
@@ -146,7 +146,7 @@ namespace Servicio_tickets
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Val1", Int32.Parse(Session["id"].ToString()));
-                cmd.Parameters.AddWithValue("@Val2", asunto.Value);
+                cmd.Parameters.AddWithValue("@Val2", textboxasunto.Text);
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows) //Si tiene datos

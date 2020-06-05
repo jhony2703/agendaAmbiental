@@ -88,21 +88,28 @@
                 <td style="width:30%; text-align:right;"><label>Proceso:</label></td>
                 <td style=" width: 90% ">
                     <asp:DropDownList ID="Pro" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="Pro_SelectedIndexChanged" OnTextChanged="Pro_TextChanged"></asp:DropDownList>
+					<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="Pro" ForeColor="Red"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
                 <td style="width: 30%; text-align: right;"><label>Servicio:</label></td>
                 <td style="width:90%">
                     <asp:DropDownList ID="Serv" runat="server" CssClass="form-control"></asp:DropDownList>
+					<asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="Serv" ForeColor="Red"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
                 <td style="width:30%; text-align:right;"><label>Asunto:</label></td>
-                <td style="width:90%"><input class="form-control" type="text" id="asunto" runat="server" placeholder="Asunto del ticket" maxlength="20"  /></td>
+                <td style="width:90%">
+					<asp:TextBox runat="server" class="form-control" placeholder="Asunto del ticket" maxlength="20" ID="textboxasunto"/>
+					<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="textboxasunto" ForeColor="Red"></asp:RequiredFieldValidator>
             </tr>
             <tr>
                 <td style="width:30%; text-align:right;"><label>Detalle Solicitud:</label></td>
-                <td style="width:90%"><textarea maxlength="500" id="detalle" runat="server" class="form-control"></textarea></td>
+                <td style="width:90%">
+					<asp:TextBox class="form-control" ID="textarea" TextMode="multiline" Columns="50" Rows="3" runat="server" />
+					<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Campo obligatorio" ControlToValidate="textarea" ForeColor="Red"></asp:RequiredFieldValidator>
+				</td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:right">
