@@ -149,7 +149,7 @@ select c.* from Comentario c where c.idTicket=1;
 
 select s.nombre as Servicio, u.nombre as Unidad, e.nombre_completo as Encargado from Servicio s inner join Ticket t on t.idServicio = s.idServicio inner join Unidad u on u.idUnidad=s.idUnidad inner join Encargado e on e.RPE = u.RPE where t.idTicket=1
 select * from Servicio s inner join Ticket t on t.idServicio = s.idServicio inner join Unidad u on u.idUnidad=s.idUnidad inner join Encargado e on e.RPE = u.RPE where t.idTicket=1
-select * from Servicio s inner join Unidad u on u.idUnidad=s.idUnidad
+select s.* from Servicio s inner join Unidad u on u.idUnidad=s.idUnidad where u.idUnidad = 4
 
 --UPDATE Ticket SET Estatus=1, Fecha_fin=NULL,Asunto='Un asunto' where idTicket=3
 --UPDATE Comentario SET Descripcion='Este es un ejemplo' where idTicket=3

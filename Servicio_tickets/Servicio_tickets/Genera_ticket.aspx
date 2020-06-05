@@ -87,24 +87,13 @@
             <tr>
                 <td style="width:30%; text-align:right;"><label>Proceso:</label></td>
                 <td style=" width: 90% ">
-                    <select class="form-control">
-                        <option>Comunicación</option>
-                       <%-- <option>Ejemplo 2</option>
-                        <option>Ejemplo 3</option>
-                        <option>Ejemplo 4</option>
-                        <option>Ejemplo 5</option>--%>
-                    </select>
+                    <asp:DropDownList ID="Pro" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="Pro_SelectedIndexChanged" OnTextChanged="Pro_TextChanged"></asp:DropDownList>
                 </td>
             </tr>
             <tr>
                 <td style="width: 30%; text-align: right;"><label>Servicio:</label></td>
                 <td style="width:90%">
-                    <select class="form-control" id="servicio" runat="server">
-                        <option value="1" selected>Servicio de Difusión y Comunicación</option>
-                        <option value="2">Servicio de Generación de Contenidos</option>
-                        <option value="3">Servicio de Fotografía</option>
-                        <option value="4">Servicio Audiovisual</option>
-                    </select>
+                    <asp:DropDownList ID="Serv" runat="server" CssClass="form-control"></asp:DropDownList>
                 </td>
             </tr>
             <tr>

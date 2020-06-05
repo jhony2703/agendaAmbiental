@@ -24,50 +24,56 @@ namespace Servicio_tickets
         {
             if (Session["curp"] != null)
             {
-                SqlConnection conn = new SqlConnection(GetConnectionString());
-                string sql = "select * from usuario_externo where curp=@val1";
-                try
+                if (!IsPostBack)
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@Val1", Session["curp"].ToString());
-                    cmd.CommandType = CommandType.Text;
-                    //cmd.ExecuteNonQuery();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows) //Si tiene datos
+                    SqlConnection conn = new SqlConnection(GetConnectionString());
+                    string sql = "select * from usuario_externo where curp=@val1";
+                    try
                     {
-                        while (reader.Read())//Se leen
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@Val1", Session["curp"].ToString());
+                        cmd.CommandType = CommandType.Text;
+                        //cmd.ExecuteNonQuery();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.HasRows) //Si tiene datos
                         {
-                            Session["id"] = reader.GetInt32(0);
-                            Session["nombre"] = nombC.Text = reader.GetString(3);
-                            usu.Text = reader.GetString(4);
-                            Session["correo"] = correo.Text = reader.GetString(5);
-                            Session["cel"] = tel.Text = reader.GetString(6);
+                            while (reader.Read())//Se leen
+                            {
+                                Session["id"] = reader.GetInt32(0);
+                                Session["nombre"] = nombC.Text = reader.GetString(3);
+                                usu.Text = reader.GetString(4);
+                                Session["correo"] = correo.Text = reader.GetString(5);
+                                Session["cel"] = tel.Text = reader.GetString(6);
+                            }
                         }
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('Ocurrio un error');</script>");
-                        Response.Redirect("Index.aspx");
-                    }
-                    reader.Close();
+                        else
+                        {
+                            Response.Write("<script>alert('Ocurrio un error');</script>");
+                            Response.Redirect("Index.aspx");
+                        }
+                        reader.Close();
 
-                }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    string msg = "Insert Error:";
-                    msg += ex.Message;
-                    throw new Exception(msg);
-                }
-                finally
-                {
-                    conn.Close();
+                    }
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        string msg = "Insert Error:";
+                        msg += ex.Message;
+                        throw new Exception(msg);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    llenaProcesos();
                 }
             }
             else
             {
                 Response.Redirect("Index.aspx");
             }
+
+            
 }
 
         public void insertaTicket()
@@ -78,7 +84,7 @@ namespace Servicio_tickets
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@Val1", servicio.Value);
+                cmd.Parameters.AddWithValue("@Val1", Serv.SelectedValue);
                 cmd.Parameters.AddWithValue("@Val2", Int32.Parse(Session["id"].ToString()));
                 cmd.Parameters.AddWithValue("@Val3", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@Val4", DBNull.Value);
@@ -170,6 +176,22 @@ namespace Servicio_tickets
             return val;
         }
 
+        private void llenaProcesos()
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString()); //Parametros de conexion
+            string sql = "select * from Unidad"; //Query
+            //Se sacan los datos y se meten en los select
+            SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
+            conn.Open();
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            Pro.DataSource = dt;
+            Pro.DataTextField = "nombre";
+            Pro.DataValueField = "idUnidad";
+            Pro.DataBind();
+            conn.Close();
+        }
+
         /// <summary>
         /// Metodo que regresa la cadena de conexion a la base de datos.
         /// </summary>
@@ -183,6 +205,27 @@ namespace Servicio_tickets
         protected void envia_Click(object sender, EventArgs e)
         {
             insertaTicket();
+        }
+
+        protected void Pro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void Pro_TextChanged(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection(GetConnectionString()); //Parametros de conexion
+            string sql = "select * from Servicio where idUnidad=" + Pro.SelectedValue; //Query
+            //Se sacan los datos y se meten en los select
+            SqlDataAdapter sda = new SqlDataAdapter(sql, conn);
+            conn.Open();
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            Serv.DataSource = dt;
+            Serv.DataTextField = "nombre";
+            Serv.DataValueField = "idServicio";
+            Serv.DataBind();
+            conn.Close();
         }
     }
 

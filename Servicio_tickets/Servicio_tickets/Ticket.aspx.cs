@@ -113,7 +113,7 @@ namespace Servicio_tickets
                         divcol.Attributes["class"] = "col-sm";
                         divcol.TagName = "div";
                         divrow.Controls.Add(divcol);
-                        p.InnerText = "Area:"+ reader.GetString(1);
+                        p.InnerText = "Area: "+ reader.GetString(1);
                         p.TagName = "p";
                         divcol.Controls.Add(p);
 
@@ -122,7 +122,7 @@ namespace Servicio_tickets
                         divcol2.Attributes["class"] = "col-sm";
                         divcol2.TagName = "div";
                         divrow.Controls.Add(divcol2);
-                        p2.InnerText = "Servicio:" + reader.GetString(0);
+                        p2.InnerText = "Servicio: " + reader.GetString(0);
                         p2.TagName = "p";
                         divcol2.Controls.Add(p2);
 
@@ -131,7 +131,7 @@ namespace Servicio_tickets
                         divcol3.Attributes["class"] = "col-sm";
                         divcol3.TagName = "div";
                         divrow.Controls.Add(divcol3);
-                        p3.InnerText = "Encargado:" + reader.GetString(2);
+                        p3.InnerText = "Encargado: " + reader.GetString(2);
                         p3.TagName = "p";
                         divcol3.Controls.Add(p3);
 

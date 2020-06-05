@@ -60,13 +60,22 @@ namespace Servicio_tickets
         protected global::System.Web.UI.WebControls.Label tel;
 
         /// <summary>
-        /// Control servicio.
+        /// Control Pro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect servicio;
+        protected global::System.Web.UI.WebControls.DropDownList Pro;
+
+        /// <summary>
+        /// Control Serv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Serv;
 
         /// <summary>
         /// Control asunto.
